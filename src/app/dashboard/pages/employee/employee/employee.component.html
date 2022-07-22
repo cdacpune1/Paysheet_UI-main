@@ -1,0 +1,398 @@
+<div class="main-content">
+    <div class="container-fluid">
+        <div class="text-right pt-4">
+            <button type="button" (click)="addEmployeeData()" class="btn addEmpBtn text-center" data-bs-toggle="modal"
+                data-bs-target="#addModal">Add_Emp</button>
+        </div>
+        <div class="container">
+            <div>
+                <mat-form-field appearance="standard" style="width: 30%;">
+                    <mat-label>Filter</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" autocomplete="off" placeholder="Search Here.." #input>
+                </mat-form-field>
+
+                <div class="mat-elevation-z8">
+                    <table mat-table [dataSource]="dataSource" matSort>
+
+                        <ng-container matColumnDef="empId">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Emp-Id </th>
+                            <td mat-cell *matCellDef="let row"> {{row.empId}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="firstName">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> FirstName </th>
+                            <td mat-cell *matCellDef="let row"> {{row.fname}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="lastName">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> LastName </th>
+                            <td mat-cell *matCellDef="let row"> {{row.lname}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="dob">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> DOB</th>
+                            <td mat-cell *matCellDef="let row"> {{row.dob | date}} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="status">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>
+                            <td mat-cell *matCellDef="let row"> {{row.status }} </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="reportingManager">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header> Re-Manager </th>
+                            <td mat-cell *matCellDef="let row"> {{row.repManager }} </td>
+                        </ng-container>
+                        <ng-container matColumnDef="action">
+                            <th mat-header-cell *matHeaderCellDef mat-sort-header>Action</th>
+                            <td mat-cell *matCellDef="let row">
+                                <i class="material-icons" style="cursor: pointer;color: rgb(94, 94, 172);"
+                                    (click)="viewEmployee(row)">visibility</i>&nbsp;
+                                <i class="material-icons" style="cursor: pointer;color: rgb(95, 91, 164);"
+                                    (click)="editEmployee(row)">edit</i>&nbsp;
+                                <i class="material-symbols-outlined" (click)="deleteEmployeeData(row)"
+                                    style="cursor: pointer;color: rgb(95, 91, 164);" color="warn">delete</i>&nbsp;
+                            </td>
+                        </ng-container>
+
+
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                        <!-- Row shown when there is no matching data. -->
+                        <tr class="mat-row" *matNoDataRow>
+                            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                        </tr>
+                    </table>
+
+                    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users">
+                    </mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 
+<ng-template #content let-modal>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="modal-header border-0">
+                <h2>Employee Form</h2>
+                <button type="button" class="btn-close" aria-label="Close"
+                    (click)="modal.dismiss('Cross click')"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mask d-flex align-items-center h-100">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-lg-10">
+                                <div class="card" style="border-radius: 1rem;">
+                                    <div class="card-body p-4">
+
+                                        <form [formGroup]="formValue" (ngSubmit)="modal.dismiss()">
+                                            <div class="row">
+                                                <div class="col-12 col-md-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label  " for="emp_id">EmpID</label>
+                                                        <input type="text"
+                                                            onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                                            formControlName="emp_id" required class="form-control" />
+                                                        <span *ngIf="formValue.invalid && formValue.touched"
+                                                            class="error"> *EmpId is required</span>
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label " for="fname">FirstName</label>
+                                                        <input type="text"
+                                                            onkeypress='return event.charCode >= 97 && event.charCode <= 122 || event.charCode >= 65 && event.charCode <= 90'
+                                                            formControlName="fname" required class="form-control" />
+                                                        <span *ngIf="formValue.invalid && formValue.touched"
+                                                            class="error"> *FirstName is required</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 col-md-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label  " for="mname">MiddleName</label>
+                                                        <input type="text"
+                                                            onkeypress='return event.charCode >= 97 && event.charCode <= 122 || event.charCode >= 65 && event.charCode <= 90'
+                                                            formControlName="mname" class="form-control" />
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label  " for="lname">LastName</label>
+                                                        <input type="text"
+                                                            onkeypress='return event.charCode >= 97 && event.charCode <= 122 || event.charCode >= 65 && event.charCode <= 90'
+                                                            formControlName="lname" required class="form-control" />
+                                                        <span *ngIf="formValue.invalid && formValue.touched"
+                                                            class="error"> *LastName is required</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-4">
+                                                <label class="form-label  " for="gender">Gender</label>
+                                                <select class="form-select" formControlName="gender" required
+                                                    aria-label="Default select example">
+                                                    <option selected disabled>Select a Gender</option>
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+
+                                                </select>
+                                                <span *ngIf="formValue.invalid && formValue.touched" class="error">
+                                                    *Gender is required</span>
+                                            </div>
+
+                                            <div class="form-group mb-4">
+                                                <label class="form-label  " for="email">Email</label>
+                                                <input type="email" formControlName="email" required
+                                                    class="form-control" />
+                                                <span *ngIf="formValue.invalid && formValue.touched" class="error">
+                                                    *EmailId is required</span>
+
+                                            </div>
+                                            <div class="form-group mb-4">
+
+                                                <label class="form-label  " for="pass">Password</label>
+                                                <input type="password" formControlName="pass" required
+                                                    class="form-control" />
+                                                <span *ngIf="!formValue.valid && formValue.touched" class="error">
+                                                    *Password is required & it should be min 8 char contains(1
+                                                    Uppercase,1 Lowercase,1 Number,1 SpecialChar).
+                                                </span>
+
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 col-md-6 mb-4">
+
+                                                    <div class="form-group mb-4">
+                                                        <label class="form-label  " for="dob">DOB</label>
+                                                        <input type="date" formControlName="dob" required
+                                                            class="form-control" />
+                                                        <span *ngIf="formValue.invalid && formValue.touched"
+                                                            class="error">
+                                                            *DOB is required</span>
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6 mb-4">
+                                                    <div class="form-group mb-4">
+                                                        <label class="form-label  " for="doj">DOJ</label>
+                                                        <input type="date" formControlName="doj" required
+                                                            class="form-control" />
+                                                        <span *ngIf="formValue.invalid && formValue.touched"
+                                                            class="error">
+                                                            *DOJ is required</span>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-4">
+                                                <label class="form-label  " for="status">Status</label>
+                                                <select class="form-select" formControlName="status" required
+                                                    aria-label="Default select example">
+                                                    <option value="pending">Pending</option>
+                                                    <option value="active">Active</option>
+                                                    <option value="closed">Closed</option>
+                                                </select>
+                                                <span *ngIf="formValue.invalid && formValue.touched" class="error">
+                                                    *Status is required</span>
+                                            </div>
+
+                                            <div class="form-group mb-4">
+                                                <label class="form-label   " for="repManager">ReportingManager</label>
+                                                <input type="text"
+                                                    onkeypress='return event.charCode >= 97 && event.charCode <= 122 || event.charCode >= 65 && event.charCode <= 90'
+                                                    formControlName="repManager" class="form-control" />
+
+                                            </div>
+                                            <div class="form-group mb-4">
+                                                <label class="form-label  " for="mobNo">MobileNumber</label>
+                                                <input type="text"
+                                                    onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                                    formControlName="mobNo" required class="form-control" />
+                                                <span *ngIf="formValue.invalid && formValue.touched" class="error">
+                                                    *Mob-No is required</span>
+                                            </div>
+
+                                            <div class="form-group mb-4">
+                                                <label class="form-label  " for="contNo">ContactNumber</label>
+                                                <input type="text"
+                                                    onkeypress='return event.charCode >= 48 && event.charCode <= 57'
+                                                    formControlName="contNo" class="form-control" />
+
+                                            </div>
+                                            <div class="float-right">
+                                                <button type="submit" *ngIf="showAdd" [disabled]="formValue.invalid"
+                                                    class="btn btn-secondary btn-block "
+                                                    style="width:200px;float: right;"
+                                                    (click)="addEmpData()">ADD_EMPLOYEE
+                                                </button>
+                                            </div>
+                                            <div class="float-right">
+                                                <button type="submit" *ngIf="showbtn" [disabled]="formValue.invalid"
+                                                    class="btn btn-secondary btn-block"
+                                                    style="width:200px;float: right;"
+                                                    (click)="updateEmpData()">UPDATE_EMPLOYEE
+                                                </button>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</ng-template> -->
+
+
+<!-- --------------------------------------------------View Employee Modal------------------------------ -->
+<!-- 
+<ng-template #contentView let-modal>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="modal-header border-0">
+                <h2>Employee Form</h2>
+                <button type="button" class="btn-close" aria-label="Close"
+                    (click)="modal.dismiss('Cross click')"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mask d-flex align-items-center h-100">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-lg-10">
+                                <div class="card" style="border-radius: 1rem;">
+                                    <div class="card-body p-5">
+
+                                        <form [formGroup]="formValue">
+                                            <div class="row">
+                                                <div class="col-12 col-md-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label  " for="emp_id">EmpID</label>
+                                                        <input type="text" [attr.disabled]="true"
+                                                            formControlName="emp_id" class="form-control" />
+
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label  " for="fname">FirstName</label>
+                                                        <input type="text" [attr.disabled]="true"
+                                                            formControlName="fname" class="form-control" />
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 col-md-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label  " for="mname">MiddleName</label>
+                                                        <input type="text" [attr.disabled]="true"
+                                                            formControlName="mname" class="form-control" />
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6 mb-4">
+                                                    <div class="form-group">
+                                                        <label class="form-label  " for="lname">LastName</label>
+                                                        <input type="text" [attr.disabled]="flag"
+                                                            formControlName="lname" class="form-control" />
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-4">
+                                                <label class="form-label  " for="gender">Gender</label>
+                                                <select class="form-select" [attr.disabled]="true"
+                                                    formControlName="gender" aria-label="Default select example">
+                                                    <option selected>Select a Gender</option>
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group mb-4">
+                                                <label class="form-label  " for="email">Email</label>
+                                                <input type="email" formControlName="email" [attr.disabled]="true"
+                                                    class="form-control" />
+
+                                            </div>
+                                            <div class="form-group mb-4">
+
+                                                <label class="form-label  " for="pass">Password</label>
+                                                <input type="password" formControlName="pass" [attr.disabled]="true"
+                                                    class="form-control" />
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12 col-md-6 mb-4">
+
+                                                    <div class="form-group mb-4">
+                                                        <label class="form-label  " for="dob">DOB</label>
+                                                        <input type="date" formControlName="dob" [attr.disabled]="true"
+                                                            class="form-control" />
+
+                                                    </div>
+                                                </div>
+                                                <div class="col-12 col-md-6 mb-4">
+                                                    <div class="form-group mb-4">
+                                                        <label class="form-label  " for="doj">DOJ</label>
+                                                        <input type="date" formControlName="doj" [attr.disabled]="true"
+                                                            class="form-control" />
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group mb-4">
+                                                <label class="form-label  " for="status">Status</label>
+                                                <select class="form-select" [attr.disabled]="true"
+                                                    formControlName="status" aria-label="Default select example">
+                                                    <option value="pending">Pending</option>
+                                                    <option value="active">Active</option>
+                                                    <option value="closed">Closed</option>
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group mb-4">
+                                                <label class="form-label  " for="repManager">ReportingManager</label>
+                                                <input type="text" formControlName="repManager" [attr.disabled]="true"
+                                                    class="form-control" />
+
+                                            </div>
+                                            <div class="form-group mb-4">
+                                                <label class="form-label  " for="mobNo">MobileNumber</label>
+                                                <input type="text" formControlName="mobNo" [attr.disabled]="true"
+                                                    class="form-control" />
+
+                                            </div>
+
+                                            <div class="form-group mb-4">
+                                                <label class="form-label  " for="contNo">ContactNumber</label>
+                                                <input type="text" formControlName="contNo" [attr.disabled]="true"
+                                                    class="form-control" />
+
+                                            </div>
+
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</ng-template> -->

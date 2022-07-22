@@ -1,0 +1,20 @@
+{
+  "posts": [
+    {
+      "id": 3,
+      "name": "Amey dhoot",
+      "type": "app deve",
+      "status": true
+    },
+    {
+      "id": 4,
+      "name": "Amey D",
+      "type": "App dev",
+      "status": true
+    }
+  ],
+  "comments": [],
+  "profile": {
+    "name": "typicode"
+  }
+}

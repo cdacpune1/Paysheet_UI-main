@@ -1,0 +1,103 @@
+<h1 class="text-center" mat-dailog-title>View Employee Form</h1>
+<div mat-dailog-content>
+    <form [formGroup]="employeeForm">
+
+        <div class="row">
+            <div class="col-12 col-md-6 mb-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>EmpID</mat-label>
+                    <input formControlName="emp_id" readonly autocomplete="off" matInput>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6 mb-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>FirstName</mat-label>
+                    <input
+                        onkeypress='return event.charCode >= 97 && event.charCode <= 122 || event.charCode >= 65 && event.charCode <= 90'
+                        formControlName="fname" readonly autocomplete="off" matInput placeholder="Enter FirstName">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6 mb-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>MiddleName</mat-label>
+                    <input
+                        onkeypress='return event.charCode >= 97 && event.charCode <= 122 || event.charCode >= 65 && event.charCode <= 90'
+                        formControlName="mname" autocomplete="off" matInput placeholder="Enter MiddleName">
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6 mb-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>LastName</mat-label>
+                    <input
+                        onkeypress='return event.charCode >= 97 && event.charCode <= 122 || event.charCode >= 65 && event.charCode <= 90'
+                        formControlName="lname" autocomplete="off" matInput placeholder="Enter FirstName">
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-form-field appearance="outline">
+            <mat-label>Gender</mat-label>
+            <mat-select formControlName="gender" placeholder="Select Gender">
+                <mat-option value="male">Male</mat-option>
+                <mat-option value="female">Female</mat-option>
+                <mat-option value="other">Other</mat-option>
+
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Email</mat-label>
+            <input formControlName="email" autocomplete="off" matInput placeholder="Enter EmailId">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input type="password" formControlName="pass" autocomplete="off" matInput placeholder="Enter Password">
+        </mat-form-field>
+
+        <div class="row">
+            <div class="col-12 col-md-6 mb-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>DOB</mat-label>
+                    <input matInput placeholder="Select Date Of Birth" formControlName="dob" autocomplete="off"
+                        [matDatepicker]="picker">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6 mb-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>DOJ</mat-label>
+                    <input matInput formControlName="doj" placeholder="Select Date Of Joining" autocomplete="off"
+                        [matDatepicker]="pickerdoj">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="pickerdoj"></mat-datepicker-toggle>
+                    <mat-datepicker #pickerdoj></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </div>
+        <mat-form-field appearance="outline">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status" placeholder="Select Status">
+                <mat-option value="pending">Pending</mat-option>
+                <mat-option value="active">Active</mat-option>
+                <mat-option value="closed">Closed</mat-option>
+
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>ReportingManager</mat-label>
+            <input
+                onkeypress='return event.charCode >= 97 && event.charCode <= 122 || event.charCode >= 65 && event.charCode <= 90'
+                formControlName="repManager" autocomplete="off" matInput placeholder="Enter Name of ReportingManager">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>MobileNumber</mat-label>
+            <input formControlName="mobNo" autocomplete="off" matInput placeholder="Enter Mobile Number">
+        </mat-form-field>
+
+    </form>
+</div>
+<div mat-dialog-action [align]="'end'">
+    <button mat-raised-button color="warn" mat-dialog-close>Close</button>
+</div>

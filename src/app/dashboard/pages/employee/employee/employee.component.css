@@ -1,0 +1,55 @@
+/* input.ng-touched.ng-invalid {
+    border-left: 2px solid red;
+}
+
+input.ng-touched.ng-valid {
+
+    border-left: 2px solid green;
+
+} */
+
+.error {
+    color: red;
+}
+
+::ng-deep .custom-style {
+    background-color: rgb(6, 10, 7);
+    color: white;
+}
+
+table {
+    width: 100%;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+th {
+    text-decoration: solid;
+    font-weight: bold;
+    font-size: 13px;
+    color: #51CBCE;
+}
+
+label {
+    color: #51CBCE;
+}
+
+.addEmpBtn {
+    width: 200px;
+    float: right;
+    background-color: #3f51b5;
+    color: white;
+}
+
+/* .modal-body {
+    margin-top: 0;
+    padding-top: 0;
+} */
